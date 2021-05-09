@@ -1,18 +1,16 @@
-#!./venv/bin/python3
+#!./venv/bin/python
 
-import os
-from dotenv import load_dotenv
+import logging
 
 import discord
 from discord.ext import commands
 from discord.ext.commands import CommandNotFound, MissingRequiredArgument
 
-from keep_alive import keep_alive
+from replit import db
 
+from keep_alive import keep_alive
 import libs.config as config
 
-# Load environment variables from .env file
-load_dotenv()
 
 ####################
 # Config variables #
@@ -29,12 +27,14 @@ s_status = config.get_string("status")
 # Prefix
 bot = commands.Bot(command_prefix=c_prefix)
 
+
 # Log to a file
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
 handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
 logger.addHandler(handler)
+
 
 # Logging the starting point of bot into the console
 @bot.event
@@ -94,4 +94,4 @@ if __name__ == "__main__":
     main()
 
 keep_alive()
-bot.run(os.getenv("BOT_TOKEN"))
+bot.run(db["BOT_TOKEN"])
