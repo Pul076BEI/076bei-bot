@@ -1,15 +1,9 @@
 {
-	"prefix": "!",
+	"prefix": "-",
 	"cogs": [
 		"cogs.admin",
-		"cogs.misc"
+		"cogs.misc",
+		"cogs.clean_url"
 	],
-	"disabled_cogs": [],
-	"channels": [
-		12345,
-		67890
-	],
-	"roles": {
-		"admin": 1234
-	}
+	"disabled_cogs": []
 }

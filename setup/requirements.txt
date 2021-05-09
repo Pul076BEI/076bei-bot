@@ -1,0 +1,7 @@
+# git+git://github.com/Rapptz/discord.py
+discord
+python-dotenv
+unalix
+flask
+requests
+
