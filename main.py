@@ -1,7 +1,6 @@
 #!./venv/bin/python3
 
 import os
-import json
 from dotenv import load_dotenv
 
 import discord
@@ -30,6 +29,12 @@ s_status = config.get_string("status")
 # Prefix
 bot = commands.Bot(command_prefix=c_prefix)
 
+# Log to a file
+logger = logging.getLogger('discord')
+logger.setLevel(logging.DEBUG)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
 
 # Logging the starting point of bot into the console
 @bot.event
@@ -83,7 +88,7 @@ def main():
             await ctx.channel.send(f"**[Success]**\tAll cogs reloaded successfully.")
         else:
             not_reloaded_cogs = '\n'.join(not_reloaded)
-            await ctx.channel.send(f"**[ERROR]**\t{len(not_reloaded)} cog(s) could not be loaded:\n{not_reloaded_cogs}")
+            await ctx.channel.send(f"**[ERROR]**\t{len(not_reloaded)} cog(s) could not be reloaded:\n{not_reloaded_cogs}")
 
 if __name__ == "__main__":
     main()
