@@ -4,23 +4,21 @@ from urllib.parse import unquote
 from unalix import clear_url, unshort_url
 from discord.ext import commands
 
-import libs.config as config
-
 URL_PATTERN = re.compile(r'(https?://\S+|https?://www\.\S+|www\.\S+)')
-puncts = ',.?\'"-:!'
+# puncts = ',.?\'"-:!'
+puncts = '!"$%\'()*+,-.:;<>?@[\\]^_`{|}~'
 
 
 class Clean_URL(commands.Cog, name="Clean URLs"):
     def __init__(self, bot):
         self.bot = bot
-    
+
     @commands.Cog.listener()
     async def on_message(self, msg):
-        if msg.author.bot:# or msg.channel.id != 758645353368125461:
+        if msg.author.bot:
             return
 
-        message = msg.content.lower()
-        found_links = list(set(URL_PATTERN.findall(msg.content)))
+        found_links = list(set(URL_PATTERN.findall(msg.content.replace('`', ''))))
 
         if not found_links:
             return
@@ -34,7 +32,7 @@ class Clean_URL(commands.Cog, name="Clean URLs"):
             else:
                 links.append(link)
 
-        clean_links = []
+        clean_links = {}
 
         for link in links:
             try:
@@ -45,13 +43,13 @@ class Clean_URL(commands.Cog, name="Clean URLs"):
             if tmp == link:
                 continue
             else:
-                clean_links.append(tmp)
+                clean_links[link] = tmp
 
-        if not len(clean_links):        # if no unclean url, do nothing
+        if not len(clean_links.values()):        # if no unclean url, do nothing
             return
     
-        plural = 's' if len(clean_links) != 1 else ''
-        to_send = '\n'.join(clean_links)
+        plural = 's' if len(clean_links.values()) != 1 else ''
+        to_send = '\n'.join([clean_link+' -> [Foul URL: <'+old_link+'> ]' for old_link, clean_link in clean_links.items()])
         await msg.channel.send(f":warning: **Foul URL{plural} detected. Cleaned URL{plural}:**\n{to_send}")
 
 
