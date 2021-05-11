@@ -29,10 +29,12 @@ bot = commands.Bot(command_prefix=c_prefix)
 
 
 # Log to a file
-logger = logging.getLogger('discord')
+logger = logging.getLogger("discord")
 logger.setLevel(logging.ERROR)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='a')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+handler = logging.FileHandler(filename="discord.log", encoding="utf-8", mode="a")
+handler.setFormatter(
+    logging.Formatter("%(asctime)s:%(levelname)s:%(name)s: %(message)s")
+)
 logger.addHandler(handler)
 
 
@@ -40,7 +42,10 @@ logger.addHandler(handler)
 @bot.event
 async def on_ready():
     print(f"\n### Logged in as {bot.user}\n")
-    await bot.change_presence(status=discord.Status.online, activity=discord.Game(name=f'{s_status}'))
+    await bot.change_presence(
+        status=discord.Status.online, activity=discord.Game(name=f"{s_status}")
+    )
+
 
 # Removes the "command not found" error from the console
 @bot.event
@@ -52,6 +57,7 @@ async def on_command_error(ctx, error):
             return
 
     raise error
+
 
 # Load cogs
 def main():
@@ -69,9 +75,13 @@ def main():
                 bot.load_extension(extension)
                 print(f"[Success]\t{extension} loaded successfully.")
             except Exception as e:
-                print(f"[ERROR]\tAn error occurred while loading {extension}\n-->" + str(e) + "\n")
+                print(
+                    f"[ERROR]\tAn error occurred while loading {extension}\n-->"
+                    + str(e)
+                    + "\n"
+                )
 
-    @bot.command(name='reload', aliases=['rl'])
+    @bot.command(name="reload", aliases=["rl"])
     async def _reload(ctx):
         """Reaload the enabled cogs"""
         reloaded = []
@@ -82,13 +92,20 @@ def main():
                 reloaded.append(extension)
             except Exception as e:
                 not_reloaded.append(extension)
-                print(f"[ERROR]\tAn error occurred while reloading {extension}\n-->" + str(e) + "\n")
-        
+                print(
+                    f"[ERROR]\tAn error occurred while reloading {extension}\n-->"
+                    + str(e)
+                    + "\n"
+                )
+
         if not len(not_reloaded):
             await ctx.channel.send(f"**[Success]**\tAll cogs reloaded successfully.")
         else:
-            not_reloaded_cogs = '\n'.join(not_reloaded)
-            await ctx.channel.send(f"**[ERROR]**\t{len(not_reloaded)} cog(s) could not be reloaded:\n{not_reloaded_cogs}")
+            not_reloaded_cogs = "\n".join(not_reloaded)
+            await ctx.channel.send(
+                f"**[ERROR]**\t{len(not_reloaded)} cog(s) could not be reloaded:\n{not_reloaded_cogs}"
+            )
+
 
 if __name__ == "__main__":
     main()
