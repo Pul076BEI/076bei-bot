@@ -1,5 +1,4 @@
 import typing
-import asyncio
 
 from discord import User
 from discord.ext import commands
@@ -47,6 +46,7 @@ class Admin(commands.Cog, name="Admin commands"):
         Purges messages in a channel until the given message_id,
         but the message with the id is not deleted
         """
+        channel = ctx.message.channel
         try:
             message = await channel.fetch_message(message_id)
 
