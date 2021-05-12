@@ -15,10 +15,10 @@ class Clean_URL(commands.Cog, name="Clean URLs"):
 
     @commands.Cog.listener()
     async def on_message(self, msg):
-        if msg.author.bot:
+        if msg.author.id == 808012864941981726:
             return
 
-        found_links = list(set(URL_PATTERN.findall(msg.content.replace("`", ""))))
+        found_links = list(set(URL_PATTERN.findall(msg.content)))
 
         if not found_links:
             return
