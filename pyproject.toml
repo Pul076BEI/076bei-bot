@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "076bei-bot"
+version = "0.1.0"
+description = ""
+authors = ["Prajwol Pradhan <jarp0l@duck.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Flask = "^2.0.2"
+APScheduler = "^3.8.1"
+pymongo = "^3.12.1"
+feedgen = "^0.9.0"
+"discord.py" = "^1.7.3"
+dnspython = "2.1.0"
+Unalix = "^0.9"
+"backports.zoneinfo" = "^0.2.1"
+replit = "^3.2.4"
+bs4 = "^0.0.1"
+configparser = "^5.1.0"
+black = "^21.11b1"
+py-cord = "^1.7.3"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

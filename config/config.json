@@ -1,0 +1,22 @@
+{
+    "prefix": "-",
+    "cogs": [
+        "cogs.admin",
+        "cogs.feed",
+        "cogs.ping"
+    ],
+    "disabled_cogs": [
+        "cogs.clean_url",
+        "cogs.misc",
+        "cogs.xkcd_comics"
+    ],
+    "listen_channels": [
+        758596303877308427,
+        760525148167602276,
+        837660739816128582,
+        841156865110441994,
+        836282900600848434,
+        840121074670108682,
+        758600063261343756
+    ]
+}
