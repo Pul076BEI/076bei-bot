@@ -1,8 +1,6 @@
 import os
 
-from datetime import datetime
-
-from backports.zoneinfo import ZoneInfo
+import pendulum
 from pymongo import MongoClient
 from feedgen.feed import FeedGenerator
 
@@ -45,8 +43,10 @@ class MyFeed(FeedGenerator):
             fe.link(href=entry["message_url"])
             fe.description(f"""{entry["message"]}<br><br>- @{entry["author"]}""")
             fe.published(
-                datetime.strptime(entry["publish_date"], "%Y-%m-%d %H:%M:%S %z")
-            )
+                pendulum.from_format(
+                    entry["publish_date"], "YYYY-MM-DD HH:mm:ss ZZ", tz="UTC"
+                )
+            )  # Get date-time as datetime object
 
         self.rss_str(pretty=True)  # Get the RSS feed as string
         self.rss_file("feed/rss.xml")  # Write the RSS feed to a file
@@ -69,8 +69,8 @@ class MyFeed(FeedGenerator):
             else msg.author.name
         )
 
-        publish_date = datetime.now().astimezone(ZoneInfo("UTC"))
-        str_date = publish_date.strftime("%Y-%m-%d %H:%M:%S %z")
+        publish_date = pendulum.now(tz="UTC")
+        str_date = publish_date.format("YYYY-MM-DD HH:mm:ss ZZ")
 
         new_update = {
             "message_url": f"https://discord.com/channels/758544148121780226/{channel_id}/{message_id}",
